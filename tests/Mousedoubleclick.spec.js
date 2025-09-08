@@ -7,5 +7,11 @@ test ('Mouse double click test', async ({page}) => {
    //double click
    await btncopy.dblclick();
 
+   const f2=await page.locator('#field2');
+
+   await expect (f2).toHaveValue('Hello World!');
+
+   await page.waitForTimeout(5000);
+
 });
    

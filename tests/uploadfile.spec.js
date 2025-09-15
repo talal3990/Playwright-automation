@@ -21,6 +21,20 @@ test("Single file Upload (dummy text file)", async ({ page }) => {
 
 
 
-test("Multiple file Upload", async ({ page }) => {
+test.only("Multiple file Upload", async ({ page }) => {
+    await page.goto("https://davidwalsh.name/demo/multiple-file-upload.php");
+    await page.locator('#filesToUpload').setInputFiles(['tests/upload files/sample.txt', 'tests/upload files/sample2.txt']);
+await page.waitForTimeout(5000);
+expect(await page.locator('#fileList').textContent()).toContain('sample.txt');
+expect(await page.locator('#fileList').textContent()).toContain('sample2.txt');
 
+await page.waitForTimeout(3000);
+//removing files
+await page.locator('#filesToUpload').setInputFiles([]);
+await page.waitForTimeout(3000);
+
+expect(await page.locator('#fileList').textContent()).not.toContain('sample.txt');
+expect(await page.locator('#fileList').textContent()).not.toContain('sample2.txt');
+
+await page.waitForTimeout(3000);
 })
